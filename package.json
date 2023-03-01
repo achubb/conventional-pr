@@ -1,0 +1,28 @@
+{
+  "name": "conventional-pr",
+  "version": "1.0.0",
+  "description": "Custom github action to lint pull requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achubb/conventional-pr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/achubb/conventional-pr/issues"
+  },
+  "homepage": "https://github.com/achubb/conventional-pr#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@commitlint/lint": "^17.4.4"
+  },
+  "devDependencies": {
+    "@commitlint/load": "^17.4.4"
+  }
+}
