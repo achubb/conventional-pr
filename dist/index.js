@@ -1,70 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 7805:
-/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
-
-"use strict";
-__nccwpck_require__.r(__webpack_exports__);
-/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "lintPR": () => (/* binding */ lintPR)
-/* harmony export */ });
-const load = (__nccwpck_require__(3237)["default"]);
-const lint = (__nccwpck_require__(9584)["default"]);
-
-function selectParserOpts(parserPreset){
-    if (typeof parserPreset !== 'object') {
-      return null
-    }
-  
-    if (typeof parserPreset.parserOpts !== 'object') {
-      return null
-    }
-  
-    return parserPreset.parserOpts
-}
-
-function getLintOptions(config) {
-    const opts = {
-        parserOpts: {},
-        plugins: {},
-        ignores: [],
-        defaultIgnores: true
-    }
-
-    if (config.parserPreset) {
-        const parserOpts = selectParserOpts(config.parserPreset)
-        if (parserOpts) opts.parserOpts = parserOpts
-    }
-
-    if (config.plugins) {
-        opts.plugins = config.plugins
-    }
-      
-    if (config.ignores) {
-        opts.ignores = config.ignores
-    }
-
-    if (!config.defaultIgnores) {
-        opts.defaultIgnores = false
-    }
-      
-    return opts
-}
-
-function lintPR(title, configurationPath) {
-    const config = load({}, {file: configurationPath, cwd: process.cwd()})
-    const options = getLintOptions(config)
-    const result = lint(title, config.rules, options)
-
-    if (result.valid) return
-
-    const errorMessage = result.errors.map(({message, name}) => `${name}:${message}`).join('\n')
-    throw new Error(errorMessage);
-}
-
-/***/ }),
-
 /***/ 6580:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -84163,32 +84099,9 @@ module.exports = {"version":"10.9.1"};
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__nccwpck_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
@@ -84210,7 +84123,59 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(7820);
 const github = __nccwpck_require__(3737);
-const lintPR = __nccwpck_require__(7805);
+const load = (__nccwpck_require__(3237)["default"]);
+const lint = (__nccwpck_require__(9584)["default"]);
+
+function selectParserOpts(parserPreset){
+    if (typeof parserPreset !== 'object') {
+      return null
+    }
+  
+    if (typeof parserPreset.parserOpts !== 'object') {
+      return null
+    }
+  
+    return parserPreset.parserOpts
+}
+
+function getLintOptions(config) {
+    const opts = {
+        parserOpts: {},
+        plugins: {},
+        ignores: [],
+        defaultIgnores: true
+    }
+
+    if (config.parserPreset) {
+        const parserOpts = selectParserOpts(config.parserPreset)
+        if (parserOpts) opts.parserOpts = parserOpts
+    }
+
+    if (config.plugins) {
+        opts.plugins = config.plugins
+    }
+      
+    if (config.ignores) {
+        opts.ignores = config.ignores
+    }
+
+    if (!config.defaultIgnores) {
+        opts.defaultIgnores = false
+    }
+      
+    return opts
+}
+
+function lintPR(title, configurationPath) {
+    const config = load({}, {file: configurationPath, cwd: process.cwd()})
+    const options = getLintOptions(config)
+    const result = lint(title, config.rules, options)
+
+    if (result.valid) return
+
+    const errorMessage = result.errors.map(({message, name}) => `${name}:${message}`).join('\n')
+    throw new Error(errorMessage);
+}
 
 function getPrTitle() {
     const pullRequest = github.context.payload.pull_request;
@@ -84230,7 +84195,7 @@ async function run() {
             return
         }
 
-        await lintPR(prTitle, configurationPath)
+        lintPR(prTitle, configurationPath)
 
     } catch (error) {
         console.log(error)
